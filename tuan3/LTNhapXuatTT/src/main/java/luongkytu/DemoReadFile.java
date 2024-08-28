@@ -20,6 +20,7 @@ public class DemoReadFile {
         try {
             //tao luong
             FileReader fr = new FileReader("baitho.txt");
+            BufferedReader br = new BufferedReader(fr);
             //Doc du lieu
             int ch;
             do{
@@ -28,7 +29,10 @@ public class DemoReadFile {
                     System.out.print((char)ch);
                 }
             } while(ch!=-1);
-                    
+            String line;
+            while ((line = br.readLine())!=null){
+                System.out.print(line);
+            }
             //dong luong
             fr.close();
             
