@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package lab09.bt01;
-
+import java.io.Serializable;
 /**
  *
  * @author ADMIN
  */
-public class SanPham {
+public class SanPham implements Serializable{
     private String maso;
     private String ten;
     private float gia;

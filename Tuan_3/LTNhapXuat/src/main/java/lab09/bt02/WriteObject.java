@@ -5,9 +5,11 @@
 package lab09.bt02;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import lab09.bt01.SanPham;
+
 /**
  *
  * @author ADMIN
@@ -21,13 +23,23 @@ public class WriteObject {
         // TODO code application logic here
          // Tạo danh sách 3 sản phẩm
         ArrayList<SanPham> ds = new ArrayList<>();
-        ds.add(new SanPham("SP001", "San pham 1", 10000f));
-        ds.add(new SanPham("SP002", "San pham 2", 20000f));
-        ds.add(new SanPham("SP003", "San pham 3", 30000f));
+        Scanner sc = new Scanner(System.in);
         try {
             // Tạo luồng ghi đối tượng vào file 'sanpham.bin'
             FileOutputStream fos = new FileOutputStream("sanpham.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+            for (int i = 0; i < 3; i++) {
+            System.out.println("Thong tin san pham thu " + (i + 1));
+            System.out.print("Nhap ma so san pham: ");
+            String maso = sc.nextLine();
+            System.out.print("Nhap ten san pham: ");
+            String ten = sc.nextLine();
+            System.out.print("Nhap gia san pham: ");
+            float gia = sc.nextFloat();
+            sc.nextLine();
+            SanPham sp = new SanPham(maso, ten, gia);
+            ds.add(sp);
+            }
 
             // Ghi danh sách sản phẩm vào file
             oos.writeObject(ds);
@@ -35,7 +47,7 @@ public class WriteObject {
             // Đóng luồng
             oos.close();
 
-            System.out.println("Da ghi danh sach san pham vao file sanpham.bin");
+            System.out.println("Da ghi xong");
 
         } catch (Exception  ex) {
             System.out.println("Loi xay ra: " + ex.toString());
