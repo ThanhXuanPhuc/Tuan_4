@@ -5,7 +5,6 @@
 package lab09.bt02;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import java.io.IOException;
 import java.util.List;
 /**
  *
@@ -28,7 +27,6 @@ public class ReadObject {
 
             // Đóng luồng
             ois.close();
-            fis.close();
 
             // Xuất danh sách sản phẩm ra màn hình
             System.out.println("Danh sach san pham da doc tu file sanpham.bin:");
@@ -36,8 +34,8 @@ public class ReadObject {
                 System.out.println(sp);
             }
 
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Loi xay ra: " + e.toString());
+        } catch (Exception ex) {
+            System.out.println("Loi xay ra: " + ex.toString());
         }
     }
 }

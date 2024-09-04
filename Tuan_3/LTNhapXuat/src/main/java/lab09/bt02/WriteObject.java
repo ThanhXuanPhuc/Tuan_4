@@ -20,26 +20,28 @@ public class WriteObject {
     public static void main(String[] args) {
         // TODO code application logic here
          // Tạo danh sách 3 sản phẩm
-        List<SanPham> danhSachSanPham = new ArrayList<>();
-        danhSachSanPham.add(new SanPham("SP001", "San pham 1", 10000f));
-        danhSachSanPham.add(new SanPham("SP002", "San pham 2", 20000f));
-        danhSachSanPham.add(new SanPham("SP003", "San pham 3", 30000f));
+        ArrayList<SanPham> ds = new ArrayList<>();
+        ds.add(new SanPham("SP001", "San pham 1", 10000f));
+        ds.add(new SanPham("SP002", "San pham 2", 20000f));
+        ds.add(new SanPham("SP003", "San pham 3", 30000f));
         try {
             // Tạo luồng ghi đối tượng vào file 'sanpham.bin'
-            FileOutputStream fo = new FileOutputStream("sanpham.bin");
-            ObjectOutputStream oo = new ObjectOutputStream(fo);
+            FileOutputStream fos = new FileOutputStream("sanpham.bin");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             // Ghi danh sách sản phẩm vào file
-            oo.writeObject(danhSachSanPham);
+            oos.writeObject(ds);
 
             // Đóng luồng
-            oo.close();
-            fo.close();
+            oos.close();
 
             System.out.println("Da ghi danh sach san pham vao file sanpham.bin");
 
-        } catch (IOException e) {
-            System.out.println("Loi xay ra: " + e.toString());
+        } catch (Exception  ex) {
+            System.out.println("Loi xay ra: " + ex.toString());
+            System.out.println("Thao tac ghi tap tin that bai");
+            
+            
         } 
 }
 }
