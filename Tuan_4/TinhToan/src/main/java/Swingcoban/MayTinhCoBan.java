@@ -74,22 +74,22 @@ public class MayTinhCoBan extends JFrame {
         bt[14].addActionListener(new ActionListener() { // nút '='
             @Override
             public void actionPerformed(ActionEvent e) {
-                double secondNumber = Double.parseDouble(txtDisplay.getText());
+                double sothuhai = Double.parseDouble(txtDisplay.getText());
                 double result = 0;
 
                 switch (operator) {
                     case "+":
-                        result = sodautien + secondNumber;
+                        result = sodautien + sothuhai;
                         break;
                     case "-":
-                        result = sodautien - secondNumber;
+                        result = sodautien - sothuhai;
                         break;
                     case "*":
-                        result = sodautien * secondNumber;
+                        result = sodautien * sothuhai;
                         break;
                     case "/":
-                        if (secondNumber != 0) {
-                            result = sodautien/ secondNumber;
+                        if (sothuhai != 0) {
+                            result = sodautien/ sothuhai;
                         } else {
                             txtDisplay.setText("Error: Div by 0");
                             return;
