@@ -1,92 +1,109 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package demo.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author ADMIN
- */
 public class DemoComboBox extends JFrame {
 
-    private JLabel lb1, lb2, lb3, lb4;
+    private JLabel lb1, lb2, lbPhepTinh, lbKq;
     private JTextField txtSo1, txtSo2, txtKq;
-    private JButton btTinh;
-    //private JRadioButton rdCong, rdTru, rdNhan, rdChia;
+    private JButton btTinh, btNhapLai;
     private JComboBox<String> cboPhepTinh;
 
     public DemoComboBox() {
-        setTitle("Tính toán đơn giản");
+        setTitle("Máy tính đơn giản");
         taoGiaoDien();
-        // setSize(400,300);
-        pack();
-        setLocationRelativeTo(null);
+        pack(); // Tự động căn chỉnh kích thước cửa sổ
+        setLocationRelativeTo(null); // Căn giữa cửa sổ
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void taoGiaoDien() {
         JPanel p1 = new JPanel();
-        p1.setLayout(new GridLayout(4, 2, 5, 5));
+        p1.setLayout(new GridLayout(5, 2, 20, 20)); // Tạo lưới với 5 hàng và 2 cột, khoảng cách 5px
+
+        // Thêm các thành phần cho phần nhập số và phép tính
         p1.add(lb1 = new JLabel("Số 1"));
         p1.add(txtSo1 = new JTextField());
-        txtSo1.setPreferredSize(new Dimension(100, 30));
+
         p1.add(lb2 = new JLabel("Số 2"));
         p1.add(txtSo2 = new JTextField());
 
-        p1.add(lb3 = new JLabel("Phép tính"));
+        p1.add(lbPhepTinh = new JLabel("Phép tính"));
+        cboPhepTinh = new JComboBox<>();
+        cboPhepTinh.addItem("Cộng");
+        cboPhepTinh.addItem("Trừ");
+        cboPhepTinh.addItem("Nhân");
+        cboPhepTinh.addItem("Chia");
+        p1.add(cboPhepTinh);
 
-        p1.add(lb4 = new JLabel("Kết quả"));
-        p1.add(txtKq = new JTextField());
+        p1.add(lbKq = new JLabel("Kết quả"));
+        txtKq = new JTextField();
+        txtKq.setEditable(false); // Không cho phép chỉnh sửa ô kết quả
+        p1.add(txtKq);
 
-        add(p1);
-        add(btTinh = new JButton("Tinh"), BorderLayout.SOUTH);
+        add(p1, BorderLayout.CENTER);
 
-        //khoi tao du lieu cho cboPhepTinh
-        cboPhepTinh.addItem("+");
-        cboPhepTinh.addItem("-");
-        cboPhepTinh.addItem("*");
-        cboPhepTinh.addItem("/");
-        
-        //tiep nhan su kien khi nguoi dung nhan nut tinh
+        // Thêm các nút tính toán và nhập lại phía dưới
+        JPanel p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
+        p2.add(btTinh = new JButton("Tính"));
+        p2.add(btNhapLai = new JButton("Nhập lại"));
+        add(p2, BorderLayout.SOUTH);
+
+        // Xử lý sự kiện cho nút "Tính"
         btTinh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //lay gia tri so1,so2
-                    double x = Double.parseDouble(txtSo1.getText());
-                    double y = Double.parseDouble(txtSo2.getText());
-                    double kq;
-                    //xet phep toan duoc chon
-                    String pheptinh = (String) cboPhepTinh.getSelectedItem();
-                    if (pheptinh.equals("+")) {
-                        kq = x + y;
-                    } else if (pheptinh.equals("-")) {
-                        kq = x - y;
-                    } else if (pheptinh.equals("*")) {
-                        kq = x * y;
-                    } else {
-                        kq = x / y;
-                    }
-                    //Hien ket qua
-                    txtKq.setText(String.valueOf(kq));
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Lỗi nhập liệu", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                }
+                    double so1 = Double.parseDouble(txtSo1.getText());
+                    double so2 = Double.parseDouble(txtSo2.getText());
+                    double kq = 0;
+                    String phepTinh = (String) cboPhepTinh.getSelectedItem();
 
+                    switch (phepTinh) {
+                        case "Cộng":
+                            kq = so1 + so2;
+                            break;
+                        case "Trừ":
+                            kq = so1 - so2;
+                            break;
+                        case "Nhân":
+                            kq = so1 * so2;
+                            break;
+                        case "Chia":
+                            if (so2 != 0) {
+                                kq = so1 / so2;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Không thể chia cho 0", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            break;
+                    }
+                    txtKq.setText(String.valueOf(kq));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số hợp lệ", "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        // Xử lý sự kiện cho nút "Nhập lại"
+        btNhapLai.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtSo1.setText("");
+                txtSo2.setText("");
+                txtKq.setText("");
+                cboPhepTinh.setSelectedIndex(0); // Đặt phép tính mặc định là "Cộng"
+                txtSo1.requestFocus(); // Đặt con trỏ vào ô nhập số 1
             }
         });
     }
 
     public static void main(String[] args) {
-        DemoRadioButton frm = new DemoRadioButton();
+        DemoComboBox frm = new DemoComboBox();
         frm.setVisible(true);
     }
 }
